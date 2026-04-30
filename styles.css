@@ -108,15 +108,15 @@ body[data-scale="l"] { --type-scale: 1.08; }
   line-height: 1.4;
 }
 
-/* Cover meta strip (client + date) */
+/* Cover meta strip (client + contact + email + date) */
 .cover-meta {
   background: var(--cream);
   border-top: 1px solid var(--rule);
   border-bottom: 1px solid var(--rule);
   padding: 22px 80px;
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  gap: 48px;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 40px;
   max-width: var(--page-w);
   margin: 0 auto;
 }

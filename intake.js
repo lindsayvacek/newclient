@@ -100,12 +100,14 @@
     const client = getVal("meta_client") || "{CLIENT_NAME}";
     const date   = getVal("meta_date") || "";
     const lead   = getVal("meta_lead") || "";
+    const email  = getVal("meta_email") || "";
 
     lines.push("# Strategy Intake — " + client);
     lines.push("*the DK | creative studio*");
     lines.push("");
     if (date)  lines.push("**Date:** " + date);
     if (lead)  lines.push("**Lead:** " + lead);
+    if (email) lines.push("**Email:** " + email);
     lines.push("");
     lines.push("---");
     lines.push("");
@@ -223,7 +225,7 @@
   }
 
   // -------- Send to studio (parallel: Web3Forms email + Google Sheets) --------
-  function sendEmail(client, lead, date, markdown) {
+  function sendEmail(client, lead, email, date, markdown) {
     const payload = {
       access_key: WEB3FORMS_ACCESS_KEY,
       subject: "Strategy intake — " + client + " (" + lead + ")",
@@ -233,6 +235,9 @@
       date: date,
       message: markdown
     };
+    // If the client provided an email, route it as reply_to so you can
+    // reply directly from your inbox without copy-pasting from the form.
+    if (email) payload.replyto = email;
     return fetch("https://api.web3forms.com/submit", {
       method: "POST",
       headers: { "Content-Type": "application/json", Accept: "application/json" },
@@ -265,6 +270,7 @@
 
     const client = getVal("meta_client") || "Untitled brand";
     const lead   = getVal("meta_lead")   || "Unknown contact";
+    const email  = getVal("meta_email")  || "";
     const date   = getVal("meta_date")   || "";
     const markdown = md();
     const raw      = collect();
@@ -272,7 +278,7 @@
     const tasks = [];
     const labels = [];
     if (WEB3FORMS_ACCESS_KEY && WEB3FORMS_ACCESS_KEY !== "PASTE_YOUR_WEB3FORMS_ACCESS_KEY") {
-      tasks.push(sendEmail(client, lead, date, markdown));
+      tasks.push(sendEmail(client, lead, email, date, markdown));
       labels.push("email");
     }
     if (SHEETS_WEBHOOK_URL && SHEETS_WEBHOOK_URL !== "PASTE_YOUR_APPS_SCRIPT_WEB_APP_URL") {
