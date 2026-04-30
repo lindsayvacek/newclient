@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 100" width="320" height="100" role="img" aria-label="the DK creative studio">
+  
+  <g class="wm">
+    <text x="160" y="58" text-anchor="middle">
+      <tspan class="the">the </tspan><tspan class="dk">DK</tspan>
+    </text>
+  </g>
+  <text x="160" y="86" text-anchor="middle" class="sub">CREATIVE STUDIO</text>
+</svg>
