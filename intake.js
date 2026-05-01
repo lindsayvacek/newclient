@@ -9,7 +9,7 @@
   // 1) Web3Forms — emails the markdown export to the address you registered at web3forms.com
   // 2) Google Apps Script — appends a row to a Google Sheet you own.
   const WEB3FORMS_ACCESS_KEY = "36b08080-3896-4637-af34-64710234fb75";
-  const SHEETS_WEBHOOK_URL   = "PASTE_YOUR_APPS_SCRIPT_WEB_APP_URL";
+  const SHEETS_WEBHOOK_URL   = "https://script.google.com/macros/s/AKfycbzf5qbYLLoxBdQnED6NlIOSpwG94QkbrKOxVsW6_9346sxlHDA2CDyhC4TgTR9CbeAr1g/exec";
 
   function $all(sel, root = document) { return Array.from(root.querySelectorAll(sel)); }
 
