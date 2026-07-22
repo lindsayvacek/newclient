@@ -825,25 +825,145 @@ body[data-imagery="off"] .photo-break { display: none; }
   margin-top: 24px;
 }
 
-/* PRINT -------------------------------------------------------------- */
+/* PRINT — portrait letter document (screen stays landscape) --------- */
 @media print {
   @page {
-    margin: 0.5in;
-    size: letter landscape;
+    margin: 0.6in;
+    size: letter portrait;
   }
-  body[data-page="a4"] {
-    /* A4 landscape handled via the @page below */
+
+  body {
+    background: white;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
   }
+
   .toolbar, .tweaks-panel-host { display: none !important; }
-  .cover { height: 7.5in; min-height: 7.5in; aspect-ratio: auto; page-break-after: always; }
-  .cover-meta { page-break-after: always; }
-  .section-opener { page-break-before: always; }
-  .photo-break { page-break-before: always; page-break-after: always; height: 7.5in; min-height: 7.5in; aspect-ratio: auto; }
-  .q { page-break-inside: avoid; }
+
+  /* Pages + fullbleed elements collapse to portrait width */
+  .page,
+  .cover,
+  .cover-meta,
+  .photo-break {
+    max-width: 100%;
+    background: white;
+  }
+  .page { padding: 0; }
+
+  /* Cover — full portrait page, hero image behind title block */
+  .cover {
+    height: 10in;
+    min-height: 10in;
+    aspect-ratio: auto;
+    page-break-after: always;
+  }
+  .cover .frame { padding: 48px 56px; }
+  .cover .title { font-size: 52px; line-height: 1.04; }
+  .cover .lockup img { height: 52px; }
+  .cover .deck-line { font-size: 20px; }
+
+  /* Meta strip — portrait can't fit 4 fields wide, drop to 2×2 */
+  .cover-meta {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px 40px;
+    padding: 22px 0;
+    page-break-after: always;
+  }
+  .cover-meta input { font-size: 20px; }
+
+  /* Welcome — single centered column */
+  .welcome { max-width: 100%; }
+  .welcome p { font-size: 22px; line-height: 1.4; }
+
+  /* Section opener — starts a new page, tighter margin */
+  .section-opener {
+    page-break-before: always;
+    margin-top: 0;
+    padding-top: 24px;
+    grid-template-columns: 72px 1fr;
+    gap: 28px;
+  }
+  .section-opener .title { font-size: 46px; }
+  .section-opener .blurb { font-size: 19px; max-width: 100%; }
+
+  /* Questions — collapse to single column, margin note stacks below */
+  .q,
+  .q.wide {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      "label"
+      "prompt"
+      "setup"
+      "answer"
+      "margin";
+    row-gap: 8px;
+    column-gap: 0;
+    padding: 28px 0;
+    page-break-inside: avoid;
+  }
+  .q .prompt { font-size: 26px; line-height: 1.2; }
+  .q .setup  { font-size: 14px; max-width: 100%; }
+
+  /* Margin note as footnote under answer, not sidebar */
+  .q .margin-note,
+  .q.wide .margin-note {
+    align-self: stretch;
+    border-left: 0;
+    border-top: 1px solid var(--rule-faint);
+    padding: 12px 0 0 0;
+    margin-top: 16px;
+    font-size: 12px;
+  }
+  .q .margin-note li,
+  .q.wide .margin-note li { padding: 4px 0; }
+
+  /* Answer fields — full content visible, no scroll clipping in print */
+  .answer textarea {
+    height: auto !important;
+    overflow: visible !important;
+    resize: none;
+  }
+  .answer textarea,
+  .answer input[type="text"] { font-size: 18px; }
+
+  /* Multi-col lists — narrower in portrait */
+  .cringe-list { grid-template-columns: repeat(2, 1fr); gap: 0 32px; }
+  .cringe-list .item:nth-last-child(3) { border-bottom: 1px solid var(--rule-faint); }
+  .cringe-list .item label { font-size: 17px; }
+
+  /* Sliders — tighter poles for portrait width */
+  .pair {
+    grid-template-columns: 90px 1fr 90px;
+    gap: 14px;
+  }
+  .pair::before { left: calc(90px + 14px); }
+  .pair::after  { right: calc(90px + 14px); }
+
+  /* Photo breaks — portrait proportions, full page */
+  .photo-break {
+    page-break-before: always;
+    page-break-after: always;
+    aspect-ratio: auto;
+    height: 9in;
+    min-height: 9in;
+    margin: 0 auto;
+  }
+
+  /* Fit pair (right/wrong) — stack vertically in portrait */
+  .fit-pair { grid-template-columns: 1fr; gap: 20px; }
+
+  /* Dontdo — wider content column in portrait */
+  .dontdo { max-width: 100%; }
+
+  /* Sub-blocks avoid mid-page breaks */
   .choice-row, .pair,
   .three-ways .opt, .cringe-list .item, .dontdo .row { page-break-inside: avoid; }
-  body { background: white; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
-  .page { background: white; max-width: 100%; padding: 0; }
+
+  /* Footer */
+  .foot {
+    page-break-before: avoid;
+    margin-top: 48px;
+  }
 }
 
 /* Mid viewports — narrow the .q sidebar so the form still fits ----- */
