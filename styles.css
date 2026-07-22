@@ -837,7 +837,7 @@ body[data-imagery="off"] .photo-break { display: none; }
     size: letter portrait;
   }
 
-  body {
+  html, body {
     background: white;
     -webkit-print-color-adjust: exact;
     print-color-adjust: exact;
@@ -864,21 +864,20 @@ body[data-imagery="off"] .photo-break { display: none; }
   }
   .page { padding-top: 0; padding-bottom: 0; }
 
-  /* Cover — compact letterhead banner instead of a full page, so
-     page 1 holds banner + client meta + welcome, and Foundation
-     opens page 2. */
+  /* Cover — hero banner sized so page 1 is full: banner + client
+     meta + welcome together fill the page, Foundation opens page 2. */
   .cover {
-    height: 2.6in;
-    min-height: 2.6in;
+    height: 4.5in;
+    min-height: 4.5in;
     aspect-ratio: auto;
     page-break-after: avoid;
     page-break-inside: avoid;
   }
-  .cover .frame { padding: 18px 32px; }
-  .cover .kicker { font-size: 10px; margin-bottom: 10px; }
-  .cover .title { font-size: 26px; line-height: 1.1; margin: 0 0 6px 0; }
-  .cover .deck-line { display: none; }
-  .cover .lockup img { height: 30px; }
+  .cover .frame { padding: 28px 40px; }
+  .cover .kicker { font-size: 10px; margin-bottom: 14px; }
+  .cover .title { font-size: 36px; line-height: 1.08; margin: 0 0 14px 0; }
+  .cover .deck-line { font-size: 16px; max-width: 420px; }
+  .cover .lockup img { height: 38px; }
   .cover .top .mono, .cover .bottom .mono { font-size: 9px; }
 
   /* Meta strip — portrait can't fit 4 fields wide, drop to 2×2.
@@ -905,13 +904,13 @@ body[data-imagery="off"] .photo-break { display: none; }
   .welcome p { font-size: 20px; line-height: 1.4; margin-bottom: 18px; }
   .page:has(.welcome) { page-break-after: always; }
 
-  /* Section opener — strong visual divider, not a forced page break.
-     page-break-inside: avoid keeps the opener block from splitting; the
-     following question can flow onto the same page. */
+  /* Section opener — every section starts a fresh page. Deterministic:
+     an opener can never be stranded at the bottom of a page away from
+     its first question. */
   .section-opener {
-    page-break-before: auto;
+    page-break-before: always;
     page-break-inside: avoid;
-    margin-top: 20px;
+    margin-top: 0;
     margin-bottom: 20px;
     padding-top: 14px;
     border-top: 2px solid var(--ink);
@@ -937,23 +936,26 @@ body[data-imagery="off"] .photo-break { display: none; }
       "setup"
       "answer"
       "margin";
-    row-gap: 6px;
+    row-gap: 4px;
     column-gap: 0;
-    padding: 18px 0;
+    padding: 12px 0;
     page-break-inside: avoid;
     break-inside: avoid;
   }
+  .q .label { margin-bottom: 8px; }
   /* Sentence case on paper — the h3 uppercase default fights the
      brand rule (display serif is never all caps) and long caps
      prompts wrap badly at portrait width */
   .q .prompt {
-    font-size: 24px;
+    font-size: 22px;
     line-height: 1.2;
     text-transform: none;
+    margin-bottom: 10px;
   }
   .q .setup {
     font-size: 13px;
     max-width: 100%;
+    margin-bottom: 14px;
   }
 
   /* Margin note as footnote under answer, not sidebar */
@@ -962,12 +964,14 @@ body[data-imagery="off"] .photo-break { display: none; }
     align-self: stretch;
     border-left: 0;
     border-top: 1px solid var(--rule-faint);
-    padding: 12px 0 0 0;
-    margin-top: 16px;
-    font-size: 12px;
+    padding: 8px 0 0 0;
+    margin-top: 10px;
+    font-size: 11px;
+    line-height: 1.45;
   }
   .q .margin-note li,
-  .q.wide .margin-note li { padding: 4px 0; }
+  .q.wide .margin-note li { padding: 2px 0; }
+  .q .margin-note .header { margin-bottom: 6px; }
 
   /* Answer fields — handwriting room. min-height overrides the inline
      height styles in the HTML (style="height: 141px" etc). Ruled
@@ -975,7 +979,7 @@ body[data-imagery="off"] .photo-break { display: none; }
      per answer; typed content still expands past min-height via the
      JS auto-grow. */
   .answer textarea {
-    min-height: 130px !important;
+    min-height: 108px !important;
     height: auto !important;
     overflow: visible !important;
     resize: none;
@@ -998,6 +1002,7 @@ body[data-imagery="off"] .photo-break { display: none; }
   ::placeholder { color: transparent !important; }
   .answer input[type="text"]::placeholder {
     color: var(--stone) !important;
+    font-size: 12px;
   }
 
   /* Hide slider thumbs — a pre-printed dot on a blank form looks like
