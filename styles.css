@@ -825,10 +825,12 @@ body[data-imagery="off"] .photo-break { display: none; }
   margin-top: 24px;
 }
 
-/* PRINT — portrait letter document (screen stays landscape) --------- */
+/* PRINT — portrait letter, handwriting-ready workbook.
+   A client prints this and writes answers by hand. Screen stays
+   landscape; print flips to portrait with ruled answer areas. ------- */
 @media print {
   @page {
-    margin: 0.6in;
+    margin: 0.5in;
     size: letter portrait;
   }
 
@@ -840,15 +842,24 @@ body[data-imagery="off"] .photo-break { display: none; }
 
   .toolbar, .tweaks-panel-host { display: none !important; }
 
-  /* Pages + fullbleed elements collapse to portrait width */
+  /* Pages + fullbleed elements collapse to portrait width.
+     Horizontal padding here is a safety inset in case the browser's
+     print dialog "Margins" setting overrides @page (Chrome's Default
+     dropdown can zero it out). Combined with @page margin, gives
+     total ~0.7in per side. */
   .page,
+  .cover-meta {
+    max-width: 100%;
+    background: white;
+    padding-left: 0.35in;
+    padding-right: 0.35in;
+  }
   .cover,
-  .cover-meta,
   .photo-break {
     max-width: 100%;
     background: white;
   }
-  .page { padding: 0; }
+  .page { padding-top: 0; padding-bottom: 0; }
 
   /* Cover — takes the full first page (page-break-after forces the
      next content onto a new page). Slightly shorter so the browser's
@@ -865,13 +876,17 @@ body[data-imagery="off"] .photo-break { display: none; }
   .cover .deck-line { font-size: 19px; }
 
   /* Meta strip — portrait can't fit 4 fields wide, drop to 2×2.
-     Flows into welcome page (no forced break) to save a page. */
+     Flows into welcome page (no forced break) to save a page.
+     Keep the horizontal inset (the shorthand would zero it out). */
   .cover-meta {
     grid-template-columns: repeat(2, 1fr);
     gap: 24px 40px;
-    padding: 22px 0;
+    padding: 22px 0.35in;
   }
   .cover-meta input { font-size: 20px; }
+
+  /* On-paper irrelevant: the autosave/toolbar note in the welcome */
+  .welcome .small { display: none; }
 
   /* Welcome — single centered column */
   .welcome { max-width: 100%; }
@@ -893,6 +908,8 @@ body[data-imagery="off"] .photo-break { display: none; }
   .section-opener .title { font-size: 36px; margin-bottom: 8px; }
   .section-opener .blurb { font-size: 17px; max-width: 100%; margin-top: 12px; }
   .section-opener .produces { font-size: 10px; }
+  /* Numeral aligns with the title top, not the blurb baseline */
+  .section-opener { align-items: start; }
 
   /* Questions — collapse to single column, margin note stacks below.
      Force the whole question (prompt + setup + answer + margin note)
@@ -935,18 +952,36 @@ body[data-imagery="off"] .photo-break { display: none; }
   .q .margin-note li,
   .q.wide .margin-note li { padding: 4px 0; }
 
-  /* Answer fields — compact but writable; force override of inline
-     heights set in the HTML (style="height: 141px" etc). For empty
-     forms this gives ~4 lines of writing room per question. Filled
-     content expands naturally via JS auto-grow before print. */
+  /* Answer fields — handwriting room. min-height overrides the inline
+     height styles in the HTML (style="height: 141px" etc). Ruled
+     guide lines every 34px give a client 3-4 clean handwriting lines
+     per answer; typed content still expands past min-height via the
+     JS auto-grow. */
   .answer textarea {
-    min-height: 70px !important;
+    min-height: 130px !important;
     height: auto !important;
     overflow: visible !important;
     resize: none;
+    background-image: repeating-linear-gradient(
+      to bottom,
+      transparent 0,
+      transparent 33px,
+      var(--rule-faint) 33px,
+      var(--rule-faint) 34px
+    );
+    background-attachment: local;
   }
   .answer textarea,
   .answer input[type="text"] { font-size: 17px; padding: 8px 0; }
+
+  /* Hide placeholder hints — printed gray text reads as pre-filled
+     content and clutters the handwriting space */
+  ::placeholder { color: transparent !important; }
+
+  /* Hide slider thumbs — a pre-printed dot on a blank form looks like
+     an answer. Track + ticks stay; clients mark position by hand. */
+  .pair input[type="range"]::-webkit-slider-thumb { visibility: hidden; }
+  .pair input[type="range"]::-moz-range-thumb { visibility: hidden; }
 
   /* Multi-col lists — narrower in portrait, compact rows */
   .cringe-list { grid-template-columns: repeat(2, 1fr); gap: 0 32px; }
