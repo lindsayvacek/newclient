@@ -850,17 +850,19 @@ body[data-imagery="off"] .photo-break { display: none; }
   }
   .page { padding: 0; }
 
-  /* Cover — full portrait page, hero image behind title block */
+  /* Cover — takes the full first page (page-break-after forces the
+     next content onto a new page). Slightly shorter so the browser's
+     scale-to-fit doesn't shrink it. */
   .cover {
-    height: 10in;
-    min-height: 10in;
+    height: 9.6in;
+    min-height: 9.6in;
     aspect-ratio: auto;
     page-break-after: always;
   }
-  .cover .frame { padding: 48px 56px; }
-  .cover .title { font-size: 52px; line-height: 1.04; }
-  .cover .lockup img { height: 52px; }
-  .cover .deck-line { font-size: 20px; }
+  .cover .frame { padding: 40px 48px; }
+  .cover .title { font-size: 48px; line-height: 1.04; }
+  .cover .lockup img { height: 48px; }
+  .cover .deck-line { font-size: 19px; }
 
   /* Meta strip — portrait can't fit 4 fields wide, drop to 2×2.
      Flows into welcome page (no forced break) to save a page. */
@@ -881,14 +883,16 @@ body[data-imagery="off"] .photo-break { display: none; }
   .section-opener {
     page-break-before: auto;
     page-break-inside: avoid;
-    margin-top: 40px;
-    padding-top: 24px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    padding-top: 14px;
     border-top: 2px solid var(--ink);
-    grid-template-columns: 72px 1fr;
-    gap: 28px;
+    grid-template-columns: 60px 1fr;
+    gap: 20px;
   }
-  .section-opener .title { font-size: 46px; }
-  .section-opener .blurb { font-size: 19px; max-width: 100%; }
+  .section-opener .title { font-size: 36px; margin-bottom: 8px; }
+  .section-opener .blurb { font-size: 17px; max-width: 100%; margin-top: 12px; }
+  .section-opener .produces { font-size: 10px; }
 
   /* Questions — collapse to single column, margin note stacks below.
      Allow breaking inside long questions rather than forcing every one
@@ -932,21 +936,43 @@ body[data-imagery="off"] .photo-break { display: none; }
   .q .margin-note li,
   .q.wide .margin-note li { padding: 4px 0; }
 
-  /* Answer fields — full content visible, no scroll clipping in print */
+  /* Answer fields — compact but writable; force override of inline
+     heights set in the HTML (style="height: 141px" etc). For empty
+     forms this gives ~4 lines of writing room per question. Filled
+     content expands naturally via JS auto-grow before print. */
   .answer textarea {
+    min-height: 70px !important;
     height: auto !important;
     overflow: visible !important;
     resize: none;
   }
   .answer textarea,
-  .answer input[type="text"] { font-size: 18px; }
+  .answer input[type="text"] { font-size: 17px; padding: 8px 0; }
 
-  /* Multi-col lists — narrower in portrait */
+  /* Multi-col lists — narrower in portrait, compact rows */
   .cringe-list { grid-template-columns: repeat(2, 1fr); gap: 0 32px; }
-  .cringe-list .item:nth-last-child(3) { border-bottom: 1px solid var(--rule-faint); }
-  .cringe-list .item label { font-size: 17px; }
+  .cringe-list .item {
+    padding: 6px 0;
+    border-bottom: 1px solid var(--rule-faint);
+  }
+  .cringe-list .item label { font-size: 15px; }
 
-  /* Sliders — tighter poles for portrait width */
+  /* Dontdo rows — compact */
+  .dontdo .row {
+    padding: 8px 0;
+    grid-template-columns: 1fr 70px 70px;
+    gap: 16px;
+  }
+  .dontdo .row .text { font-size: 15px; }
+
+  /* Three-ways options — compact */
+  .three-ways .opt {
+    padding: 10px 0;
+  }
+  .three-ways .opt label { font-size: 17px; line-height: 1.3; }
+
+  /* Sliders — tighter poles + tighter row spacing */
+  .pair-stack { gap: 12px; padding-top: 8px; }
   .pair {
     grid-template-columns: 90px 1fr 90px;
     gap: 14px;
