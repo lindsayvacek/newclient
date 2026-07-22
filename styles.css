@@ -895,8 +895,9 @@ body[data-imagery="off"] .photo-break { display: none; }
   .section-opener .produces { font-size: 10px; }
 
   /* Questions — collapse to single column, margin note stacks below.
-     Allow breaking inside long questions rather than forcing every one
-     to its own page; keep the prompt with its answer so nothing orphans. */
+     Force the whole question (prompt + setup + answer + margin note)
+     to stay on one page. Trade-off: some pages end with whitespace,
+     but no orphaned margin notes. */
   .q,
   .q.wide {
     grid-template-columns: 1fr;
@@ -909,19 +910,17 @@ body[data-imagery="off"] .photo-break { display: none; }
     row-gap: 6px;
     column-gap: 0;
     padding: 18px 0;
-    page-break-inside: auto;
+    page-break-inside: avoid;
+    break-inside: avoid;
   }
   .q .prompt {
     font-size: 24px;
     line-height: 1.2;
-    page-break-after: avoid;
   }
   .q .setup {
     font-size: 13px;
     max-width: 100%;
-    page-break-after: avoid;
   }
-  .q .answer { page-break-before: avoid; }
 
   /* Margin note as footnote under answer, not sidebar */
   .q .margin-note,
