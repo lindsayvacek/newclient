@@ -864,19 +864,22 @@ body[data-imagery="off"] .photo-break { display: none; }
   }
   .page { padding-top: 0; padding-bottom: 0; }
 
-  /* Cover — takes the full first page (page-break-after forces the
-     next content onto a new page). Slightly shorter so the browser's
-     scale-to-fit doesn't shrink it. */
+  /* Cover — compact letterhead banner instead of a full page, so
+     page 1 holds banner + client meta + welcome, and Foundation
+     opens page 2. */
   .cover {
-    height: 9.6in;
-    min-height: 9.6in;
+    height: 2.6in;
+    min-height: 2.6in;
     aspect-ratio: auto;
-    page-break-after: always;
+    page-break-after: avoid;
+    page-break-inside: avoid;
   }
-  .cover .frame { padding: 40px 48px; }
-  .cover .title { font-size: 48px; line-height: 1.04; }
-  .cover .lockup img { height: 48px; }
-  .cover .deck-line { font-size: 19px; }
+  .cover .frame { padding: 18px 32px; }
+  .cover .kicker { font-size: 10px; margin-bottom: 10px; }
+  .cover .title { font-size: 26px; line-height: 1.1; margin: 0 0 6px 0; }
+  .cover .deck-line { display: none; }
+  .cover .lockup img { height: 30px; }
+  .cover .top .mono, .cover .bottom .mono { font-size: 9px; }
 
   /* Meta strip — portrait can't fit 4 fields wide, drop to 2×2.
      Flows into welcome page (no forced break) to save a page.
@@ -896,9 +899,11 @@ body[data-imagery="off"] .photo-break { display: none; }
      doesn't apply. */
   .bt-only { display: grid !important; }
 
-  /* Welcome — single centered column */
+  /* Welcome — single centered column; page 1 ends after it so
+     Foundation opens page 2 */
   .welcome { max-width: 100%; }
-  .welcome p { font-size: 22px; line-height: 1.4; }
+  .welcome p { font-size: 20px; line-height: 1.4; margin-bottom: 18px; }
+  .page:has(.welcome) { page-break-after: always; }
 
   /* Section opener — strong visual divider, not a forced page break.
      page-break-inside: avoid keeps the opener block from splitting; the
@@ -1063,15 +1068,17 @@ body[data-imagery="off"] .photo-break { display: none; }
   .print-note { display: inline; }
 }
 
-/* Mid viewports — narrow the .q sidebar so the form still fits ----- */
-@media (max-width: 1180px) {
+/* Mid viewports — narrow the .q sidebar so the form still fits.
+   Screen-scoped: print evaluates media queries against the page width
+   (~7.5in), which would wrongly pull these in on paper. ------------- */
+@media screen and (max-width: 1180px) {
   .q { grid-template-columns: 1fr 280px; gap: 56px; }
   .cringe-list { grid-template-columns: repeat(2, 1fr); }
   .cringe-list .item:nth-last-child(3) { border-bottom: 1px solid var(--rule-faint); }
 }
 
-/* Smaller viewports -------------------------------------------------- */
-@media (max-width: 880px) {
+/* Smaller viewports (screen only — see note above) ------------------ */
+@media screen and (max-width: 880px) {
   :root { --page-pad-x: 24px; --page-pad-y: 48px; }
   .q {
     grid-template-columns: 1fr;
