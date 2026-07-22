@@ -862,12 +862,12 @@ body[data-imagery="off"] .photo-break { display: none; }
   .cover .lockup img { height: 52px; }
   .cover .deck-line { font-size: 20px; }
 
-  /* Meta strip — portrait can't fit 4 fields wide, drop to 2×2 */
+  /* Meta strip — portrait can't fit 4 fields wide, drop to 2×2.
+     Flows into welcome page (no forced break) to save a page. */
   .cover-meta {
     grid-template-columns: repeat(2, 1fr);
     gap: 24px 40px;
     padding: 22px 0;
-    page-break-after: always;
   }
   .cover-meta input { font-size: 20px; }
 
@@ -875,18 +875,24 @@ body[data-imagery="off"] .photo-break { display: none; }
   .welcome { max-width: 100%; }
   .welcome p { font-size: 22px; line-height: 1.4; }
 
-  /* Section opener — starts a new page, tighter margin */
+  /* Section opener — strong visual divider, not a forced page break.
+     page-break-inside: avoid keeps the opener block from splitting; the
+     following question can flow onto the same page. */
   .section-opener {
-    page-break-before: always;
-    margin-top: 0;
+    page-break-before: auto;
+    page-break-inside: avoid;
+    margin-top: 40px;
     padding-top: 24px;
+    border-top: 2px solid var(--ink);
     grid-template-columns: 72px 1fr;
     gap: 28px;
   }
   .section-opener .title { font-size: 46px; }
   .section-opener .blurb { font-size: 19px; max-width: 100%; }
 
-  /* Questions — collapse to single column, margin note stacks below */
+  /* Questions — collapse to single column, margin note stacks below.
+     Allow breaking inside long questions rather than forcing every one
+     to its own page; keep the prompt with its answer so nothing orphans. */
   .q,
   .q.wide {
     grid-template-columns: 1fr;
@@ -896,13 +902,22 @@ body[data-imagery="off"] .photo-break { display: none; }
       "setup"
       "answer"
       "margin";
-    row-gap: 8px;
+    row-gap: 6px;
     column-gap: 0;
-    padding: 28px 0;
-    page-break-inside: avoid;
+    padding: 18px 0;
+    page-break-inside: auto;
   }
-  .q .prompt { font-size: 26px; line-height: 1.2; }
-  .q .setup  { font-size: 14px; max-width: 100%; }
+  .q .prompt {
+    font-size: 24px;
+    line-height: 1.2;
+    page-break-after: avoid;
+  }
+  .q .setup {
+    font-size: 13px;
+    max-width: 100%;
+    page-break-after: avoid;
+  }
+  .q .answer { page-break-before: avoid; }
 
   /* Margin note as footnote under answer, not sidebar */
   .q .margin-note,
@@ -939,15 +954,8 @@ body[data-imagery="off"] .photo-break { display: none; }
   .pair::before { left: calc(90px + 14px); }
   .pair::after  { right: calc(90px + 14px); }
 
-  /* Photo breaks — portrait proportions, full page */
-  .photo-break {
-    page-break-before: always;
-    page-break-after: always;
-    aspect-ratio: auto;
-    height: 9in;
-    min-height: 9in;
-    margin: 0 auto;
-  }
+  /* Photo breaks — pure screen decoration, drop from print entirely */
+  .photo-break { display: none; }
 
   /* Fit pair (right/wrong) — stack vertically in portrait */
   .fit-pair { grid-template-columns: 1fr; gap: 20px; }
