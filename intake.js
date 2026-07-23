@@ -70,18 +70,45 @@
     }, 500);
   }
 
+  // Print mirrors — textareas clip typed answers in print (fixed-height
+  // form controls), so each gets a hidden sibling div that holds the same
+  // text. Print CSS hides the textarea and shows the div, which sizes to
+  // its content and wraps at print width.
+  function ensureMirrors() {
+    $all(".answer textarea", document).forEach(t => {
+      let m = t.nextElementSibling;
+      if (!m || !m.classList || !m.classList.contains("print-mirror")) {
+        m = document.createElement("div");
+        m.className = "print-mirror";
+        m.setAttribute("aria-hidden", "true");
+        t.insertAdjacentElement("afterend", m);
+      }
+      m.textContent = t.value;
+      m.classList.toggle("has-content", t.value.trim().length > 0);
+    });
+  }
+
   function bindAutosave() {
     const form = document.querySelector(FORM_SELECTOR);
     if (!form) return;
     form.addEventListener("input", scheduleSave);
     form.addEventListener("change", scheduleSave);
-    // Auto-grow textareas
+    // Auto-grow textareas + keep print mirrors in sync
     $all("textarea", form).forEach(t => {
-      const grow = () => { t.style.height = "auto"; t.style.height = (t.scrollHeight + 2) + "px"; };
+      const grow = () => {
+        t.style.height = "auto";
+        t.style.height = (t.scrollHeight + 2) + "px";
+        const m = t.nextElementSibling;
+        if (m && m.classList && m.classList.contains("print-mirror")) {
+          m.textContent = t.value;
+          m.classList.toggle("has-content", t.value.trim().length > 0);
+        }
+      };
       t.addEventListener("input", grow);
       // initial grow after restore
       setTimeout(grow, 0);
     });
+    window.addEventListener("beforeprint", ensureMirrors);
   }
 
   // -------- Markdown export --------
@@ -367,6 +394,7 @@
       $all("textarea, input[type=text]", form).forEach(el => el.value = "");
       $all("input[type=checkbox], input[type=radio]", form).forEach(el => el.checked = false);
       $all("textarea", form).forEach(t => { t.style.height = ""; });
+      ensureMirrors();
       const status = document.getElementById("save-status");
       if (status) { status.textContent = "Cleared"; status.classList.add("saved"); }
       const sub = document.getElementById("btn-submit");
@@ -387,6 +415,7 @@
 
   document.addEventListener("DOMContentLoaded", () => {
     restore();
+    ensureMirrors();
     bindAutosave();
     bindToolbar();
     bindBrandType();

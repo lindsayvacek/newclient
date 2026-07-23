@@ -801,6 +801,9 @@ body[data-imagery="off"] .photo-break { display: none; }
 /* Footer note swaps between screen and print */
 .print-note { display: none; }
 
+/* Print mirrors of textarea content — hidden on screen */
+.print-mirror { display: none; }
+
 /* Helpers ------------------------------------------------------------ */
 .spacer-l { height: 96px; }
 .spacer-m { height: 56px; }
@@ -973,16 +976,20 @@ body[data-imagery="off"] .photo-break { display: none; }
   .q.wide .margin-note li { padding: 2px 0; }
   .q .margin-note .header { margin-bottom: 6px; }
 
-  /* Answer fields — handwriting room. min-height overrides the inline
-     height styles in the HTML (style="height: 141px" etc). Ruled
-     guide lines every 34px give a client 3-4 clean handwriting lines
-     per answer; typed content still expands past min-height via the
-     JS auto-grow. */
+  /* Answer areas, two print modes:
+     - BLANK: the textarea itself prints — fixed handwriting room with
+       ruled guide lines (gradients on form controls rasterize crisply
+       in PDF output; on plain divs they export as blurry shading).
+     - FILLED: textareas clip typed content when printed, so the
+       textarea hides and its .print-mirror div prints instead — it
+       holds the same text and sizes to fit, wrapping at print width. */
   .answer textarea {
     min-height: 108px !important;
     height: auto !important;
     overflow: visible !important;
     resize: none;
+    font-size: 17px;
+    padding: 8px 0;
     background-image: repeating-linear-gradient(
       to bottom,
       transparent 0,
@@ -992,7 +999,22 @@ body[data-imagery="off"] .photo-break { display: none; }
     );
     background-attachment: local;
   }
-  .answer textarea,
+  .answer textarea:has(+ .print-mirror.has-content) { display: none !important; }
+  .answer .print-mirror { display: none; }
+  .answer .print-mirror.has-content {
+    display: block;
+    font-family: var(--font-display);
+    font-weight: 300;
+    font-size: 17px;
+    line-height: 1.45;
+    letter-spacing: -0.005em;
+    font-variation-settings: "opsz" 36;
+    color: var(--ink);
+    padding: 8px 0;
+    border-bottom: 1px solid var(--rule);
+    white-space: pre-wrap;
+    overflow-wrap: break-word;
+  }
   .answer input[type="text"] { font-size: 17px; padding: 8px 0; }
 
   /* Hide placeholder hints in big writing areas — printed gray text
