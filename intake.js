@@ -20,6 +20,9 @@
     $all("textarea, input[type=text]", form).forEach(el => {
       if (el.name) data[el.name] = el.value;
     });
+    $all("input[type=range]", form).forEach(el => {
+      if (el.name) data[el.name] = el.value;
+    });
     $all("input[type=radio]:checked", form).forEach(el => {
       data[el.name] = el.value;
     });
@@ -37,6 +40,9 @@
     const form = document.querySelector(FORM_SELECTOR);
     if (!form) return;
     $all("textarea, input[type=text]", form).forEach(el => {
+      if (el.name && data[el.name] != null) el.value = data[el.name];
+    });
+    $all("input[type=range]", form).forEach(el => {
       if (el.name && data[el.name] != null) el.value = data[el.name];
     });
     $all("input[type=radio]", form).forEach(el => {
@@ -134,16 +140,16 @@
         { id: "q2_1c_stay", q: "Destination · length of stay" },
         { id: "q2_1c_arrival", q: "Destination · arrival" },
         { id: "q2_1c_return", q: "Destination · return / not return" },
-        { id: "q2_2", q: "They've called three studios. Why do they pick you?" },
-        { id: "q2_3_right", q: "Right-fit client (name + one sentence)." },
-        { id: "q2_3_wrong", q: "Wrong-fit client (name + one sentence)." },
+        { id: "q2_2", q: "Three options in front of them. Why do they choose yours?" },
+        { id: "q2_3_right", q: "Right fit (names + one sentence each)." },
+        { id: "q2_3_wrong", q: "Wrong fit (name + the specific friction)." },
       ]},
       { num: "03", title: "Point of View", questions: [
-        { id: "q3_1", q: "What does the rest of the industry get wrong?" },
+        { id: "q3_1", q: "What does the rest of your industry get wrong?" },
         { id: "q3_2_a", q: "We believe ____. (1)" },
         { id: "q3_2_b", q: "We believe ____. (2)" },
         { id: "q3_2_c", q: "We believe ____. (3)" },
-        { id: "q3_3", q: "What inspires you? (verbatim)" },
+        { id: "q3_3", q: "What inspires you, lately?" },
       ]},
       { num: "04", title: "Personality & Voice", questions: [
         { id: "q4_1_1", q: "Personality word 1" },
@@ -151,14 +157,15 @@
         { id: "q4_1_3", q: "Personality word 3" },
         { id: "q4_1_4", q: "Personality word 4" },
         { id: "q4_1_5", q: "Personality word 5" },
+        { id: "q4_1_6", q: "Personality word 6" },
         { id: "q4_5", q: "Throwaway introduction (2–3 sentences)" },
-        { id: "q4_6", q: "When a client tells someone about you — what words do you hope they use?" },
+        { id: "q4_6", q: "When someone has a great experience — what words do you hope they use?" },
       ]},
       { num: "05", title: "Selectivity", questions: [
-        { id: "q5_1", q: "We don't work with brands that ____." },
-        { id: "q5_2", q: "Green flags in the first conversation." },
-        { id: "q5_3", q: "The minimum engagement." },
-        { id: "q5_4", q: "Trade-of-value exception." },
+        { id: "q5_1", q: "The hard filter — we don't serve / sell to / work with ____." },
+        { id: "q5_2", q: "The green flags." },
+        { id: "q5_3", q: "Where's the floor?" },
+        { id: "q5_4", q: "The strategic exception." },
       ]},
     ];
 
@@ -174,6 +181,18 @@
       });
       // section-specific extras
       if (sec.num === "04") {
+        lines.push("### Voice sliders (0 = left pole · 50 = middle · 100 = right pole)");
+        [
+          ["Warm", "Cool", "pair_warmth"],
+          ["Formal", "Casual", "pair_register"],
+          ["Certain", "Curious", "pair_conviction"],
+          ["Classic", "Contemporary", "pair_era"],
+          ["Restrained", "Expressive", "pair_volume"],
+          ["Serious", "Playful", "pair_tone"],
+        ].forEach(([left, right, name]) => {
+          lines.push("- " + left + " / " + right + ": **" + (getVal(name) || "50") + "**");
+        });
+        lines.push("");
         const tw = getRadio("three_ways");
         lines.push("### Three-ways pick");
         lines.push("- Picked: **" + (tw || "—") + "**");
@@ -183,6 +202,22 @@
         const cringes = getMulti("cringe_");
         if (cringes.length === 0) lines.push("_(none flagged)_");
         else cringes.forEach(c => lines.push("- " + c));
+        lines.push("");
+      }
+      if (sec.num === "05") {
+        lines.push("### Where we draw the line (Yes = we won't do this)");
+        [
+          "Competing on price to win business",
+          "Compromising on quality to hit a price point",
+          "Wholesale or distribution that requires diluting the brand",
+          "Taking on volume that compromises the experience",
+          "Partnerships with brands that conflict with our positioning",
+          "Expanding into markets we're not ready to serve well",
+        ].forEach((label, i) => {
+          const v = getRadio("dontdo_" + i);
+          lines.push("- " + label + ": **" + (v || "—") + "**");
+        });
+        lines.push("- Anything specific to your industry: " + (getVal("dontdo_industries") || "—"));
         lines.push("");
       }
       lines.push("---");
