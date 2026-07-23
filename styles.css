@@ -1054,8 +1054,9 @@ body[data-imagery="off"] .photo-break { display: none; }
   /* Photo breaks — pure screen decoration, drop from print entirely */
   .photo-break { display: none; }
 
-  /* Fit pair (right/wrong) — stack vertically in portrait */
-  .fit-pair { grid-template-columns: 1fr; gap: 20px; }
+  /* Fit pairs (right/wrong, today/after, drawn-to/off-limits) — keep
+     side by side; preserves the comparison and halves block height */
+  .fit-pair { grid-template-columns: 1fr 1fr; gap: 28px; }
 
   /* Dontdo — wider content column in portrait */
   .dontdo { max-width: 100%; }

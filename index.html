@@ -24,7 +24,7 @@
     </div>
     <div class="bottom">
       <div class="mono t-mono">the DK · brand methodology</div>
-      <div class="mono t-mono">01 — 05</div>
+      <div class="mono t-mono">01 — 06</div>
     </div>
   </div>
 </section>
@@ -625,13 +625,156 @@
 
 <!-- Photo break ----------------------------------------------------- -->
 <div class="photo-break" style="background-image: url('assets/photo-personality.jpg');" aria-hidden="true">
-  <div class="caption">05 — selectivity</div>
+  <div class="caption">05 — look &amp; feel</div>
 </div>
 
 <!-- ============================================================ § 05 -->
-<div class="page" data-screen-label="05 Selectivity">
+<div class="page" data-screen-label="05 Look &amp; feel">
   <div class="section-opener">
     <div class="num">05</div>
+    <div>
+      <h2 class="title">Look &amp; feel</h2>
+      <p class="produces">Produces — Mood · Perception targets · Palette direction</p>
+      <p class="blurb">Before any color gets picked: what this brand should feel like, and how you want to be described when you're not in the room.</p>
+    </div>
+  </div>
+
+  <!-- Q 5.1 -->
+  <div class="q">
+    <div>
+      <div class="label">5.1</div>
+      <h3 class="prompt">What should people feel?</h3>
+      <p class="setup">One or two words per moment. Feelings, not features.</p>
+      <div class="answer">
+        <div class="tag-row">
+          <input type="text" name="lf_feel_first" placeholder="First moment — walking in, arriving">
+          <input type="text" name="lf_feel_during" placeholder="While they're with you">
+          <input type="text" name="lf_feel_after" placeholder="Describing it to a friend afterward">
+        </div>
+      </div>
+    </div>
+    <aside class="margin-note">
+      <span class="header">Examples to react to</span>
+      <ul>
+        <li>Welcome · ease · anticipation</li>
+        <li>Discovery · delight · appetite</li>
+        <li>Pride · "I found this place"</li>
+      </ul>
+    </aside>
+  </div>
+
+  <!-- Q 5.2 -->
+  <div class="q wide">
+    <div>
+      <div class="label">5.2</div>
+      <h3 class="prompt">How are you seen now — and how do you want to be seen?</h3>
+      <p class="setup">Rebrands close a gap. Name both sides of it. What do people currently say, assume, or get wrong — and what should they say instead?</p>
+      <div class="answer">
+        <div class="fit-pair">
+          <div class="fit-block right">
+            <div class="head">Today</div>
+            <textarea name="lf_percep_now" placeholder="What people currently say or assume. Include the wrong parts." style="height: 141px;"></textarea>
+          </div>
+          <div class="fit-block wrong">
+            <div class="head">After the rebrand</div>
+            <textarea name="lf_percep_want" placeholder="The sentence you want overheard." style="height: 141px;"></textarea>
+          </div>
+        </div>
+      </div>
+    </div>
+    <aside class="margin-note">
+      <span class="header">Why we ask</span>
+      <ul>
+        <li>The distance between these two answers is the brief.</li>
+        <li>Be honest about today — flattering answers make weak rebrands.</li>
+      </ul>
+    </aside>
+  </div>
+
+  <!-- Q 5.3 -->
+  <div class="q wide">
+    <div>
+      <div class="label">5.3</div>
+      <h3 class="prompt">Pick a lane — or mark where you sit between them.</h3>
+      <p class="setup">Places that try to be everything to everyone end up nothing to anyone. Drag toward what this brand should be, then defend it below.</p>
+      <div class="answer">
+        <div class="pair-stack">
+          <div class="pair">
+            <span class="pole left">Lively · playful</span>
+            <input type="range" name="lf_dial_energy" min="0" max="100" step="1" value="50">
+            <span class="pole right">Calm · luxury</span>
+          </div>
+          <div class="pair">
+            <span class="pole left">Family-first</span>
+            <input type="range" name="lf_dial_audience" min="0" max="100" step="1" value="50">
+            <span class="pole right">Adults-first</span>
+          </div>
+          <div class="pair">
+            <span class="pole left">Everyday stop</span>
+            <input type="range" name="lf_dial_occasion" min="0" max="100" step="1" value="50">
+            <span class="pole right">Special occasion</span>
+          </div>
+          <div class="pair">
+            <span class="pole left">Local favorite</span>
+            <input type="range" name="lf_dial_reach" min="0" max="100" step="1" value="50">
+            <span class="pole right">Worth the drive</span>
+          </div>
+        </div>
+        <div style="margin-top:24px">
+          <textarea name="lf_fork_why" placeholder="If the brand had to live at one end for the next five years — which end, and what convinced you?" style="height: 141px;"></textarea>
+        </div>
+      </div>
+    </div>
+    <aside class="margin-note">
+      <span class="header">Note</span>
+      <ul>
+        <li>Different times of day can sit at different ends — say so.</li>
+        <li>If the owners disagree, write both cases. That argument is useful.</li>
+        <li>This answer drives color, type, and tone downstream.</li>
+      </ul>
+    </aside>
+  </div>
+
+  <!-- Q 5.4 -->
+  <div class="q wide">
+    <div>
+      <div class="label">5.4</div>
+      <h3 class="prompt">Color. What are you drawn to — and what's off-limits?</h3>
+      <p class="setup">Not hex codes. Point at things: places, materials, seasons, other brands. "The green of the harbor at low tide" beats "green."</p>
+      <div class="answer">
+        <div class="fit-pair">
+          <div class="fit-block right">
+            <div class="head">Drawn to</div>
+            <textarea name="lf_color_drawn" placeholder="Colors, materials, places, brands whose palette feels right." style="height: 141px;"></textarea>
+          </div>
+          <div class="fit-block wrong">
+            <div class="head">Off-limits</div>
+            <textarea name="lf_color_avoid" placeholder="Colors you never want associated with this brand — and why." style="height: 141px;"></textarea>
+          </div>
+        </div>
+      </div>
+    </div>
+    <aside class="margin-note">
+      <span class="header">Ways to answer</span>
+      <ul>
+        <li>A place — "the marina at golden hour"</li>
+        <li>A material — raw linen, brushed brass, driftwood</li>
+        <li>A brand whose palette you envy</li>
+        <li>A season, a time of day</li>
+      </ul>
+    </aside>
+  </div>
+</div>
+
+<!-- Photo break ----------------------------------------------------- -->
+<div class="photo-break" style="background-image: url('assets/photo-selectivity.jpg');" aria-hidden="true">
+  <div class="caption">06 — selectivity</div>
+</div>
+
+<!-- ============================================================ § 06 -->
+<div class="page" data-screen-label="06 Selectivity">
+  <div class="section-opener">
+    <div class="num">06</div>
     <div>
       <h2 class="title">Selectivity</h2>
       <p class="produces">Produces — Who we're not for · Where we won't compromise · The hard limits</p>
@@ -642,7 +785,7 @@
   <!-- Q 5.1 -->
   <div class="q">
     <div>
-      <div class="label">5.1</div>
+      <div class="label">6.1</div>
       <h3 class="prompt">The hard filter.</h3>
       <p class="setup">Finish this sentence: we don't serve / sell to / work with ___. Complete it for customers, guests, partners, stockists — whoever is relevant.</p>
       <div class="answer">
@@ -661,7 +804,7 @@
   <!-- Q 5.2 -->
   <div class="q">
     <div>
-      <div class="label">5.2</div>
+      <div class="label">6.2</div>
       <h3 class="prompt">The green flags.</h3>
       <p class="setup">What signals — early on — that a customer, guest, partner, or buyer is exactly right? Could be how they found you, what they say first, how they treat your people, what they already understand about what you do.</p>
       <div class="answer">
@@ -682,7 +825,7 @@
   <!-- Q 5.3 -->
   <div class="q">
     <div>
-      <div class="label">5.3</div>
+      <div class="label">6.3</div>
       <h3 class="prompt">Where's the floor?</h3>
       <p class="setup">Is there a minimum — order value, booking rate, project budget, number of units, minimum stay — below which it isn't worth doing? Or is it less about numbers and more about fit?</p>
       <div class="answer">
@@ -701,7 +844,7 @@
   <!-- Q 5.4 -->
   <div class="q">
     <div>
-      <div class="label">5.4</div>
+      <div class="label">6.4</div>
       <h3 class="prompt">The strategic exception.</h3>
       <p class="setup">Are there partnerships, stockists, accounts, or clients you'd take on at reduced margin because the relationship gives you something else — reach, credibility, access to a market, alignment with the brand? What's the rule, and what's the exception?</p>
       <div class="answer">
@@ -720,7 +863,7 @@
   <!-- Q 5.5 — what we don't do -->
   <div class="q wide">
     <div>
-      <div class="label">5.5</div>
+      <div class="label">6.5</div>
       <h3 class="prompt">Where we draw the line — full list.</h3>
       <p class="setup">Yes (we explicitly won't do this) or no (we do it, or we might). Add anything specific to your industry at the bottom.</p>
       <div class="answer">
@@ -866,7 +1009,7 @@ const root = ReactDOM.createRoot(document.getElementById("tweaks-root"));
 root.render(<IntakeTweaks />);
 </script>
 
-<script src="intake.js?v=4"></script>
+<script src="intake.js?v=5"></script>
 
 
 </body></html>

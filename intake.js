@@ -88,6 +88,9 @@
   function getVal(name) {
     const el = document.querySelector('[name="' + CSS.escape(name) + '"]');
     if (!el) return "";
+    // Radio groups: the first element's .value is its own value attribute,
+    // not the group's selection — resolve via :checked instead.
+    if (el.type === "radio") return getRadio(name);
     if (el.type === "checkbox") return el.checked ? "Yes" : "No";
     return (el.value || "").trim();
   }
@@ -161,7 +164,17 @@
         { id: "q4_5", q: "Throwaway introduction (2–3 sentences)" },
         { id: "q4_6", q: "When someone has a great experience — what words do you hope they use?" },
       ]},
-      { num: "05", title: "Selectivity", questions: [
+      { num: "05", title: "Look & Feel", questions: [
+        { id: "lf_feel_first", q: "Feel · first moment" },
+        { id: "lf_feel_during", q: "Feel · while they're with you" },
+        { id: "lf_feel_after", q: "Feel · describing it afterward" },
+        { id: "lf_percep_now", q: "Perception today" },
+        { id: "lf_percep_want", q: "Perception after the rebrand" },
+        { id: "lf_fork_why", q: "Pick a lane — which end, and what convinced you?" },
+        { id: "lf_color_drawn", q: "Color · drawn to" },
+        { id: "lf_color_avoid", q: "Color · off-limits" },
+      ]},
+      { num: "06", title: "Selectivity", questions: [
         { id: "q5_1", q: "The hard filter — we don't serve / sell to / work with ____." },
         { id: "q5_2", q: "The green flags." },
         { id: "q5_3", q: "Where's the floor?" },
@@ -207,6 +220,18 @@
         lines.push("");
       }
       if (sec.num === "05") {
+        lines.push("### Direction dials (0 = left pole · 50 = middle · 100 = right pole)");
+        [
+          ["Lively · playful", "Calm · luxury", "lf_dial_energy"],
+          ["Family-first", "Adults-first", "lf_dial_audience"],
+          ["Everyday stop", "Special occasion", "lf_dial_occasion"],
+          ["Local favorite", "Worth the drive", "lf_dial_reach"],
+        ].forEach(([left, right, name]) => {
+          lines.push("- " + left + " / " + right + ": **" + (getVal(name) || "50") + "**");
+        });
+        lines.push("");
+      }
+      if (sec.num === "06") {
         lines.push("### Where we draw the line (Yes = we won't do this)");
         [
           "Competing on price to win business",
