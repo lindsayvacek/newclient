@@ -191,23 +191,6 @@
         else cringes.forEach(c => lines.push("- " + c));
         lines.push("");
       }
-      if (sec.num === "05") {
-        lines.push("### What we don't do");
-        const items = [
-          "Logo only, no strategy",
-          "One-off social media posts",
-          "Spec work or unpaid pitches",
-          "Rush projects without a premium",
-          "Clients who need to approve every decision",
-          "Rebrands where the founder isn't bought in",
-        ];
-        items.forEach((label, i) => {
-          const v = getRadio("dontdo_" + i);
-          lines.push("- " + label + ": **" + (v || "—") + "**");
-        });
-        lines.push("- Industries we won't touch: " + (getVal("dontdo_industries") || "—"));
-        lines.push("");
-      }
       lines.push("---");
       lines.push("");
     });
