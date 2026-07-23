@@ -568,13 +568,16 @@
           <div class="item"><input type="checkbox" name="cringe_o" data-label="We're more than just a [thing]" id="cr_o"><label for="cr_o">We're more than just a [thing]</label></div>
           <div class="item"><input type="checkbox" name="cringe_p" data-label="Curated experiences" id="cr_p"><label for="cr_p">Curated experiences</label></div>
         </div>
+        <div style="margin-top:28px">
+          <input type="text" name="cringe_custom" placeholder="Add your own — anything else that makes you cringe">
+        </div>
       </div>
     </div>
     <aside class="margin-note">
       <span class="header">Note</span>
       <ul>
         <li>If a phrase belongs on a meditation app, yoga retreat, or wellness brand — strike it.</li>
-        <li>Add your own at the end of the list if needed (in the introduction below).</li>
+        <li>Add your own on the line at the end of the list.</li>
       </ul>
     </aside>
   </div>
@@ -863,7 +866,7 @@ const root = ReactDOM.createRoot(document.getElementById("tweaks-root"));
 root.render(<IntakeTweaks />);
 </script>
 
-<script src="intake.js?v=3"></script>
+<script src="intake.js?v=4"></script>
 
 
 </body></html>

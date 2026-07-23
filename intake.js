@@ -202,6 +202,8 @@
         const cringes = getMulti("cringe_");
         if (cringes.length === 0) lines.push("_(none flagged)_");
         else cringes.forEach(c => lines.push("- " + c));
+        const cringeCustom = getVal("cringe_custom");
+        if (cringeCustom) lines.push("- Their own: " + cringeCustom);
         lines.push("");
       }
       if (sec.num === "05") {
