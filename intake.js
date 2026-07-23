@@ -174,12 +174,6 @@
       });
       // section-specific extras
       if (sec.num === "04") {
-        lines.push("### Dinner-party test");
-        ["talking", "opinions", "wine", "humor"].forEach(k => {
-          const v = getRadio("dp_" + k);
-          lines.push("- **" + k + ":** " + (v || "—"));
-        });
-        lines.push("");
         const tw = getRadio("three_ways");
         lines.push("### Three-ways pick");
         lines.push("- Picked: **" + (tw || "—") + "**");
